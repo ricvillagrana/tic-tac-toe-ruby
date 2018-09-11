@@ -12,8 +12,8 @@ require_relative 'classes/player'
 class Tictactoe
     def initialize (size = 0, number_players = 2)
         # Check that size is equals or greater than 2
-        if size < 2
-            size = 2
+        if size < 3
+            size = 3
         end
         
         # Initialize players array
@@ -43,9 +43,3 @@ class Tictactoe
     end
     
 end
-
-
-
-
-
-
