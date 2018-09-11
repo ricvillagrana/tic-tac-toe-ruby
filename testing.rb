@@ -4,9 +4,10 @@ puts "Welcome to Tic-Tac-Toe"
 
 t = Tictactoe.new 2
 
-grid = t.getGrid
+board = t.getBoard
 
-grid.players.each do |player| 
+board.players.each do |player| 
     puts "#{player.name} => #{player.symbol}"
 end
-puts grid.size
+puts board.size
+board.show

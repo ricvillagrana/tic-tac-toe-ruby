@@ -1,4 +1,4 @@
-require_relative 'classes/grid'
+require_relative 'classes/board'
 require_relative 'classes/player'
 =begin
     TODO: Create the game logic
@@ -35,11 +35,11 @@ class Tictactoe
             @players.push(Player.new(name, symbol))
         end
 
-        @grid = Grid.new @players, size
+        @board = Board.new @players, size
     end
 
-    def getGrid
-        @grid
+    def getBoard
+        @board
     end
     
 end
