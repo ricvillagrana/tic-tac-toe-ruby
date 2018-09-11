@@ -1,13 +1,13 @@
-class Grid do
+class Grid
     def initialize (players, size)
-        self.size       = size
-        self.players    = players
+        @size = size
+        @players = players
         
     end
 
     # Define Size
     def size
-        @size
+        return @size
     end
 
     def size=(new_size)
@@ -16,7 +16,7 @@ class Grid do
 
     # Define Players
     def players
-        @players
+        return @players
     end
 
     def players=(new_players)
