@@ -22,12 +22,32 @@ board = game.get_board
 keyboard = Keyboard.new
 user_action = nil
 
-until user_action == "\e" # Stop on press ESC
+until user_action == "\e" or user_action == "EXIT" # Stop on press ESC
+    system "clear" or system "cls"
+    board.show_leaderboard
     board.show
-    case user_action
-        when "q" then board.set(player1, [0,0])
-        when "w" then board.set(player1, [0,1])
-        when "e" then board.set(player1, [0,2])
+    if board.has_winner?
+        puts "The winner is #{board.winner.name}"
+        puts "Do you want to play again? (Y/n)"
+        play_again = gets.chomp
+        play_again.downcase
+        if play_again == "y"
+            board.reset
+        else
+            user_action = "EXIT"
+        end
+    else
+        user_action = keyboard.read.downcase
+        case user_action
+            when "7" then board.set(board.player_in_turn, [0,0])
+            when "8" then board.set(board.player_in_turn, [0,1])
+            when "9" then board.set(board.player_in_turn, [0,2])
+            when "4" then board.set(board.player_in_turn, [1,0])
+            when "5" then board.set(board.player_in_turn, [1,1])
+            when "6" then board.set(board.player_in_turn, [1,2])
+            when "1" then board.set(board.player_in_turn, [2,0])
+            when "2" then board.set(board.player_in_turn, [2,1])
+            when "3" then board.set(board.player_in_turn, [2,2])
+        end
     end
-    user_action = keyboard.read.downcase
 end

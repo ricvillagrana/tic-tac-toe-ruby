@@ -3,16 +3,15 @@ class Board
         @players = players
         @board = Array.new(3) { Array.new(3) }
         @winner = nil
+        @turn = players.first
+    end
+
+    def reset
+        @winner = nil
+        @board = Array.new(3) { Array.new(3) }
     end
 
     def show # To be used: ╔╗ ═║ ╚╝ ╩╦ ╬ ╠╣
-        # Checks if player has won
-        if @winner != nil
-            puts "The winenr is #{@winner.name}"
-        else
-            puts "No winner yet"
-        end
-
         output =  "\n╔═══╦═══╦═══╗\n"
         @board.each_with_index do |row, i|
             row.each do |cell| # Fills each cell of the board that each player has taken
@@ -20,7 +19,7 @@ class Board
                 if cell == nil
                     output += "  "
                 else
-                    output += cell.symbol + " "
+                    output += "#{cell.symbol} "
                 end
             end
             output += "║\n"
@@ -32,12 +31,33 @@ class Board
         puts output
     end
 
+    def show_leaderboard
+        @players.map {|player| puts "#{player.name} (#{player.symbol}) has won #{player.wins} times."}
+    end
+
     def set (player, position)
         # Set a player in selected position
         # Position must be an array
         # Player must be Player class
         @board[position[0]][position[1]] = player
         self.evaluate
+        self.change_turn
+    end
+
+    def player_in_turn
+        @turn
+    end
+
+    def change_turn
+        @turn = @turn == @players.first ? @players.last : @players.first
+    end
+
+    def has_winner?
+        @winner != nil
+    end
+
+    def winner
+        @winner
     end
 
     def evaluate
@@ -54,10 +74,10 @@ class Board
         end
 
         # Checking main diagonal
-        @winner = @board.first.first if (0...@board.size).all? {|cell| cell == @board.first.first and cell.is_a? Player}
+        @winner = @board.first.first if (0...@board.size).all? {|key| @board[key][key] == @board.first.first and @board.first.first.is_a? Player}
         
         # Checking transposed main diagonal
-        @winner = transposed.first.first if (0...transposed.size).all? {|cell| cell == transposed.first.first and cell.is_a? Player}
+        @winner = transposed.first.first if (0...transposed.size).all? {|key| transposed[key][key] == transposed.first.first and transposed.first.first.is_a? Player}
 
         # Set the winner Player as a winner
         @winner.won if @winner != nil
