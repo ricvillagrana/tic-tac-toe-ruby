@@ -1,5 +1,6 @@
 require_relative 'lib/classes/player'
 require_relative 'lib/classes/tictactoe'
+require_relative 'lib/classes/keyboard'
 
 puts "Welcome to Tic-Tac-Toe"
 
@@ -18,12 +19,15 @@ game = Tictactoe.new players
 
 board = game.get_board
 
-board.show
+keyboard = Keyboard.new
+user_action = nil
 
-board.set(player1, [0,0])
-board.set(player1, [0,1])
-board.set(player1, [0,2])
-board.set(player1, [1,1])
-board.evaluate
-
-board.show
+until user_action == "\e" # Stop on press ESC
+    board.show
+    case user_action
+        when "q" then board.set(player1, [0,0])
+        when "w" then board.set(player1, [0,1])
+        when "e" then board.set(player1, [0,2])
+    end
+    user_action = keyboard.read.downcase
+end
