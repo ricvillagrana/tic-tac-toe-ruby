@@ -27,3 +27,35 @@ class Keyboard
         return c
     end
 end
+
+=begin
+
+case c
+	when " "
+        puts "SPACE"
+	when "\t"
+        puts "TAB"
+	when "\r"
+        puts "RETURN"
+	when "\n"
+        puts "LINE FEED"
+	when "\e"
+        puts "ESCAPE"
+	when "\e[A"
+        puts "UP ARROW"
+	when "\e[B"
+        puts "DOWN ARROW"
+	when "\e[C"
+        puts "RIGHT ARROW"
+	when "\e[D"
+        puts "LEFT ARROW"
+	when "\177"
+        puts "BACKSPACE"
+	when "\004"
+        puts "DELETE"
+	when /^.$/
+        puts "SINGLE CHAR HIT: #{c.inspect}"
+	else
+        puts "SOMETHING ELSE: #{c.inspect}"
+	end
+=end
