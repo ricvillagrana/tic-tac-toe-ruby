@@ -27,8 +27,9 @@ until user_action == "\e" or user_action == "EXIT" # Stop on press ESC
     board.show_leaderboard
     board.show
     puts board.message if board.message != nil
-    if board.has_winner?
-        puts "The winner is #{board.winner.name}"
+    if board.has_winner? or board.is_draw?
+        puts "The winner is #{board.winner.name}" if board.has_winner?
+        puts "The game end with a draw" if board.is_draw?
         puts "Do you want to play again? (y/N)"
         play_again = gets.chomp
         play_again.downcase
@@ -38,6 +39,7 @@ until user_action == "\e" or user_action == "EXIT" # Stop on press ESC
             user_action = "EXIT"
         end
     else
+        puts "Turn of #{board.player_in_turn.name}(#{board.player_in_turn.symbol})"
         user_action = keyboard.read.downcase
         case user_action
             when "7" then board.set(board.player_in_turn, [0,0])

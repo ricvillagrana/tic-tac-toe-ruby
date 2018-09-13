@@ -59,7 +59,11 @@ class Board
     end
 
     def has_winner?
-        @winner != nil
+        @winner.is_a? Player
+    end
+
+    def is_draw?
+        @winner == "DRAW"
     end
 
     def winner
@@ -87,6 +91,10 @@ class Board
 
         # Set the winner Player as a winner
         @winner.won if @winner != nil
+
+
+        # Check if draw
+        @winner = "DRAW" if @board.all? {|row| row.all? {|cell| cell != nil}}
 
         # Returns winner
         @winner
