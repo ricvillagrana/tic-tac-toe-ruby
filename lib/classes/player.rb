@@ -1,6 +1,6 @@
 class Player
-    def initialize (name = "Unamed", symbol = "NoSymbol")
-        @name = name
+    def initialize (name = "unnamed", symbol = nil)
+        @name = name.capitalize!
         @symbol = symbol
         @wins = 0
     end

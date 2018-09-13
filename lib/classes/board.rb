@@ -7,8 +7,10 @@ class Board
 
     def show # To be used: ╔╗ ═║ ╚╝ ╩╦ ╬ ╠╣
         # Checks if player has won
-        if @winner == nil
-            puts "THE WINNER IS #{@winner.name}"
+        if @winner != nil
+            puts "The winenr is #{@winner.name}"
+        else
+            puts "No winner yet"
         end
 
         output =  "\n╔═══╦═══╦═══╗\n"
@@ -43,23 +45,29 @@ class Board
         transposed = transposed_board
         
         # Checking rows
-        @board.map |row| do
-            @winner = row if row.all? {|cell| cell == row.first}
+        @board.map do |row|
+            @winner = row.first if row.all? {|cell| cell == row.first and cell.is_a? Player}
         end
         # Checking cols
-        transposed.map |col| do
-            @winner = col if col.all? {|cell| cell == col.first}
+        transposed.map do |col|
+            @winner = col.first if col.all? {|cell| cell == col.first and cell.is_a? Player}
         end
 
         # Checking main diagonal
-        @winner = @board.first.first if (0...@board.size).all? {|cell| cell == @board.first.first}
+        @winner = @board.first.first if (0...@board.size).all? {|cell| cell == @board.first.first and cell.is_a? Player}
         
         # Checking transposed main diagonal
-        @winner = transposed.first.first if (0...transposed.size).all? {|cell| cell == transposed.first.first}
+        @winner = transposed.first.first if (0...transposed.size).all? {|cell| cell == transposed.first.first and cell.is_a? Player}
+
+        # Set the winner Player as a winner
+        @winner.won if @winner != nil
+
+        # Returns winner
+        @winner
     end
 
     def transposed_board
-        treansposed = Array.new(3) { Array.new(3) }
+        transposed = Array.new(3) { Array.new(3) }
         # Filling transposed
         @board.each_with_index do |row, x|
             row.each_with_index do |cell, y|

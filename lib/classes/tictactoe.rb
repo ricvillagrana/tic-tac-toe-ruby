@@ -14,7 +14,7 @@ class Tictactoe
         @board = Board.new players
     end
 
-    def getBoard
+    def get_board
         @board
     end
     
