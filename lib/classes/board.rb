@@ -4,6 +4,7 @@ class Board
         @board = Array.new(3) { Array.new(3) }
         @winner = nil
         @turn = players.first
+        @message = nil
     end
 
     def reset
@@ -39,9 +40,14 @@ class Board
         # Set a player in selected position
         # Position must be an array
         # Player must be Player class
-        @board[position[0]][position[1]] = player
-        self.evaluate
-        self.change_turn
+        if @board[position[0]][position[1]] == nil
+            @board[position[0]][position[1]] = player
+            @message = nil
+            self.evaluate
+            self.change_turn
+        else
+            @message = "The selected position is already filled."
+        end
     end
 
     def player_in_turn
@@ -76,8 +82,8 @@ class Board
         # Checking main diagonal
         @winner = @board.first.first if (0...@board.size).all? {|key| @board[key][key] == @board.first.first and @board.first.first.is_a? Player}
         
-        # Checking transposed main diagonal
-        @winner = transposed.first.first if (0...transposed.size).all? {|key| transposed[key][key] == transposed.first.first and transposed.first.first.is_a? Player}
+        # Checking main orthogonal diagonal FIX
+        @winner = @board.last.first if (0...@board.size).all? {|key| @board[key][@board.size - 1 - key] == @board.last.first and @board.last.first.is_a? Player}
 
         # Set the winner Player as a winner
         @winner.won if @winner != nil
@@ -97,7 +103,10 @@ class Board
         transposed
     end
 
-    # Define Players
+    def message
+        return @message
+    end
+
     def players
         return @players
     end

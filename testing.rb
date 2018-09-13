@@ -26,9 +26,10 @@ until user_action == "\e" or user_action == "EXIT" # Stop on press ESC
     system "clear" or system "cls"
     board.show_leaderboard
     board.show
+    puts board.message if board.message != nil
     if board.has_winner?
         puts "The winner is #{board.winner.name}"
-        puts "Do you want to play again? (Y/n)"
+        puts "Do you want to play again? (y/N)"
         play_again = gets.chomp
         play_again.downcase
         if play_again == "y"
