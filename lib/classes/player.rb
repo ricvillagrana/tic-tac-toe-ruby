@@ -2,6 +2,14 @@ class Player
     def initialize (name = "Unamed", symbol = "NoSymbol")
         @name = name
         @symbol = symbol
+        @wins = 0
+    end
+    
+    def won
+        @wins += 1
+    end
+    def wins
+        @wins
     end
 
     def name
