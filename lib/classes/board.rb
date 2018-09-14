@@ -1,6 +1,6 @@
 class Board
-    def initialize (players)
-        @players = players
+    def initialize
+        @players = Array.new 2
         @board = Array.new(3) { Array.new(3) }
         @winner = nil
         @turn = players.first
@@ -112,15 +112,11 @@ class Board
     end
 
     def message
-        return @message
+        @message
     end
 
-    def players
-        return @players
-    end
-
-    def players=(new_players)
-        self.players = new_players
+    def add_player name, symbol
+        @players.push Player.new name, symbol
     end
 
 end
