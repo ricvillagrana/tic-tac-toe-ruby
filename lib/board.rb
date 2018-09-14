@@ -1,39 +1,38 @@
+require 'hashable'
 class Board
-    def initialize
-        @players = Array.new 2
-        @board = Array.new(3) { Array.new(3) }
+    include Hashable
+    attr_accessor :board, :players
+    def initialize size = 3
+        @players = Array.new
+        @board = Array.new(size) { Array.new(size) }
         @winner = nil
-        @turn = players.first
+        @turn = nil
         @message = nil
+    end
+
+    def start_game
+        if @players.none? {|player| player != nil}
+            puts "The game cannot start, please set 2 players"
+        else
+            @turn = @players.first
+        end
     end
 
     def reset
         @winner = nil
-        @board = Array.new(3) { Array.new(3) }
+        @board = Array.new(@board.size) { Array.new(@board.size) }
     end
 
-    def show # To be used: ╔╗ ═║ ╚╝ ╩╦ ╬ ╠╣
-        output =  "\n╔═══╦═══╦═══╗\n"
-        @board.each_with_index do |row, i|
-            row.each do |cell| # Fills each cell of the board that each player has taken
-                output += "║ "
-                if cell == nil
-                    output += "  "
-                else
-                    output += "#{cell.symbol} "
-                end
-            end
-            output += "║\n"
-            if i != @board.length-1 # Print the horizontal line if is not the last row
-                output += "╠═══╬═══╬═══╣\n"
-            end
-        end
-        output += "╚═══╩═══╩═══╝\n"
-        puts output
+    def get_board
+        export_board = Array.new(@board.size) { Array.new(@board.size) }
+        @board.each_with_index {|row, x| row.each_with_index {|cell, y| export_board[x][y] = cell == nil ? nil : {:name => cell.name, :symbol => cell.symbol, :wins => cell.wins}}}
+        export_board
     end
-
-    def show_leaderboard
-        @players.map {|player| puts "#{player.name} (#{player.symbol}) has won #{player.wins} times."}
+    
+    def get_players
+        export_players = Array.new
+        @players.each_with_index {|player, i| export_players.push({:name => player.name, :symbol => player.symbol, :wins => player.wins})}
+        export_players
     end
 
     def set (player, position)
@@ -101,7 +100,7 @@ class Board
     end
 
     def transposed_board
-        transposed = Array.new(3) { Array.new(3) }
+        transposed = Array.new(@board.size) { Array.new(@board.size) }
         # Filling transposed
         @board.each_with_index do |row, x|
             row.each_with_index do |cell, y|
