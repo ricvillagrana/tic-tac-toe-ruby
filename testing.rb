@@ -29,11 +29,11 @@ until user_action == "\e" or user_action == "EXIT" # Stop on press ESC
     puts board.message if board.message != nil
     if board.has_winner? or board.is_draw?
         puts "The winner is #{board.winner.name}" if board.has_winner?
-        puts "The game end with a draw" if board.is_draw?
-        puts "Do you want to play again? (y/N)"
+        puts "DRAW!!!" if board.is_draw?
+        puts "Do you want to play again? (Y/n)"
         play_again = gets.chomp
         play_again.downcase
-        if play_again == "y"
+        if play_again != "n"
             board.reset
         else
             user_action = "EXIT"

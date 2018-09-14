@@ -94,7 +94,7 @@ class Board
 
 
         # Check if draw
-        @winner = "DRAW" if @board.all? {|row| row.all? {|cell| cell != nil}}
+        @winner = "DRAW" if @board.all? {|row| row.all? {|cell| cell != nil}} and @winner == nil
 
         # Returns winner
         @winner
